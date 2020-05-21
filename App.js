@@ -3,8 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from './src/pages/Home/Index';
-import Login from './src/pages/Login/Index';
 import Register from './src/pages/Register/Index';
+import Service from './src/pages/Service/Index';
+import Orcamentos from './src/pages/Orcamentos/Index';
 
 const Stack = createStackNavigator();
 
@@ -18,18 +19,7 @@ function App() {
             title: 'FacilitaPRO',
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: 'black'
-            },
-            headerTintColor: 'white'
-          }}
-        />
-        <Stack.Screen name="Login"
-          component={Login}
-          options={{
-            title: 'Login',
-            headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: 'black'
+              backgroundColor: '#191919'
             },
             headerTintColor: 'white'
           }}
@@ -40,7 +30,29 @@ function App() {
             title: 'Cadastro',
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: 'black'
+              backgroundColor: '#191919'
+            },
+            headerTintColor: 'white'
+          }}
+        />
+        <Stack.Screen name="Service"
+          component={Service}
+          options={{
+            title: 'FacilitaPRO',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#191919'
+            },
+            headerTintColor: 'white'
+          }}
+        />
+        <Stack.Screen name="Orcamentos"
+          component={Orcamentos}
+          options={{
+            title: 'Meus Orçamentos',
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#191919'
             },
             headerTintColor: 'white'
           }}
