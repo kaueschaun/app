@@ -1,44 +1,52 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image} from 'react-native';
 
 
-function Orcamentos() {
+function Orcamentos({ navigation }) {
    
     return (
         <ScrollView style={styles.container}>
 
-            <View style={styles.card}>
+<View style={styles.card}>
+          
+          <View justifyContent={'space-between'} flexDirection={'row'}>
                 <Text style={styles.header} >Serviço - Pintura</Text>
-
-                <Text style={styles.listItemHeader}> Cliente </Text>
-                <Text style={styles.listItemText}> Fulano </Text>
-
-                <Text style={styles.listItemHeader}> Data </Text>
-                <Text style={styles.listItemText}> 22/05/2020</Text>
-
-                <Text style={styles.listItemHeader}> Horário </Text>
-                <Text style={styles.listItemText}> 15:00 </Text>
-
-                <Text style={styles.listItemHeader}> Contato </Text>
-                <Text style={styles.listItemText}> (53) 9958155256 </Text>
-            </View>
-
-            <View style={styles.card}>
-                <Text style={styles.header} >Serviço - Aplicar Textura</Text>
-
-                <Text style={styles.listItemHeader}> Cliente </Text>
-                <Text style={styles.listItemText}> Siclano </Text>
-
-                <Text style={styles.listItemHeader}> Data </Text>
-                <Text style={styles.listItemText}> 28/07/2020</Text>
-
-                <Text style={styles.listItemHeader}> Horário </Text>
-                <Text style={styles.listItemText}> 17:00 </Text>
-
-                <Text style={styles.listItemHeader}> Contato </Text>
-                <Text style={styles.listItemText}> (53) 9958669256 </Text>
-            </View>
-
+               
+                <TouchableOpacity style={styles.btnDelete}>
+                    <Image source={require('/fatec/FacilitaPRO/app/img/delete.png')} style={styles.icons} />
+                </TouchableOpacity>              
+         </View>
+ 
+         <View justifyContent={'space-between'} flexDirection={'row'}>
+                <Image source={require('/fatec/FacilitaPRO/app/img/exPintura.jpg')} style={styles.imgServico} />
+                 <TouchableOpacity style={styles.btnDelete} onPress={() => navigation.navigate("Detalhe")}>
+                    <Image source={require('/fatec/FacilitaPRO/app/img/detalhes.png')} style={styles.icons}/>
+                </TouchableOpacity> 
+     </View>               
+ </View>
+           
+           
+           
+           
+    <View style={styles.card}>
+          
+          <View justifyContent={'space-between'} flexDirection={'row'}>
+                <Text style={styles.header} >Serviço - Troca de Tomadas</Text>
+               
+                <TouchableOpacity style={styles.btnDelete}>
+                    <Image source={require('/fatec/FacilitaPRO/app/img/delete.png')} style={styles.icons} />
+                </TouchableOpacity>              
+         </View>
+ 
+         <View justifyContent={'space-between'} flexDirection={'row'}>
+                <Image source={require('/fatec/FacilitaPRO/app/img/exTomadas.jpg')} style={styles.imgServico} />
+                 <TouchableOpacity style={styles.btnDetalhes} onPress={() => navigation.navigate("Detalhe")}>
+                    <Image source={require('/fatec/FacilitaPRO/app/img/detalhes.png')} style={styles.icons}/>
+                </TouchableOpacity> 
+     </View>               
+ </View>
+           
+            
         </ScrollView>
 
     )
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
         height: 60,
         paddingTop: 10,
         paddingBottom: 20,
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: 'bold',
         color: 'black',
     },
@@ -96,12 +104,76 @@ const styles = StyleSheet.create({
 
     },
 
+    button: {
+        backgroundColor: '#38C600',
+        width: 80,
+        height: 30,
+        textAlign: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 30,
+        elevation: 5,
+    },
+    btnRejeitado: {
+        backgroundColor: '#F60703',
+        width: 100,
+        height: 30,
+        textAlign: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 30,
+        elevation: 5,
+    },
+
     textButton: {
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 16,
         fontWeight: 'bold',
         color: 'black',
 
     },
 
+    textButtonAtivo: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#212121',
+
+    },
+    textButtonRejeitado: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#212121',
+
+    },
+
+    icons:{
+        width: 30,
+        height: 30,
+        marginTop: 10,
+    },
+
+    imgServico:{
+        width: 300,
+        height: 180,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+       
+    },
+
+    coluna:{
+        marginRight: 10, 
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+       
+    },
+
+    btnDetalhes:{
+        
+    }
 });

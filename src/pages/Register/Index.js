@@ -1,21 +1,19 @@
 import React from 'react';
-import { StyleSheet, KeyboardAvoidingView, ScrollView, View, TextInput, Text, TouchableOpacity, } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, ScrollView, View, TextInput, Text, TouchableOpacity } from 'react-native';
 
 function Register() {
 
-
     return (
         <ScrollView>
-            <KeyboardAvoidingView
-                behavior
-                style={styles.container}>
+            <KeyboardAvoidingView  style={styles.container}>
                 <View style={styles.Card}>
 
                     <Text style={styles.titleCard}>Dados Pessoais</Text>
-
+                  
                     <TextInput style={styles.input} placeholder={"NOME"} />
                     <TextInput style={styles.input} placeholder={"SOBRENOME"} />
                     <TextInput style={styles.input} placeholder={"DATA DE NASC."} />
+                    <TextInput style={styles.input} placeholder={"CPF"} />
                     <TextInput style={styles.input} placeholder={"E-MAIL"} />
                     <TextInput style={styles.input} secureTextEntry={true} placeholder={"SENHA"} />
                     <TextInput style={styles.input} secureTextEntry={true} placeholder={"CONFIRME A SENHA"} />
@@ -33,8 +31,8 @@ function Register() {
                     <TextInput style={styles.input} placeholder={"COMPLEMENTO"} />
 
                 </View>
-
-                <TouchableOpacity style={styles.button} onPress={() => alert('editar')}>
+               
+                <TouchableOpacity style={styles.button} onPress={() => alert('Cadastro Concluído')}>
                     <Text style={styles.textButton}>CADASTRAR</Text>
                 </TouchableOpacity>
 
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
 
     //Button/Botão -------------------------------------------------------------------------------------
     button: {
-        backgroundColor: '#000',
+        backgroundColor: '#FFFB1E',
         width: '90%',
         height: 50,
         textAlign: 'center',
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
 
     textButton: {
         fontSize: 22,
-        color: '#FFFF',
+        color: '#000',
         fontWeight: 'bold',
         textAlign: 'center',
     },

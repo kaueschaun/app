@@ -79,12 +79,18 @@ function Home({ navigation }) {
                     ]
                 }
             ]}>
+                <View marginRight={40} marginLeft={15} flexDirection="row">
+                <Image source={require('/fatec/FacilitaPRO/app/img/user.png')} style={styles.icons} />
                 <TextInput style={styles.input}
                     placeholder="E-MAIL"
                     maxLength={32}
                     autoCorrect={false}
                     onChangeText={() => { }}
                 />
+                </View>
+
+                <View  marginRight={40} marginLeft={15} flexDirection="row">
+                <Image source={require('/fatec/FacilitaPRO/app/img/email.png')} style={styles.icons} />
                 <TextInput style={styles.input}
                     placeholder="SENHA"
                     secureTextEntry={true}
@@ -92,6 +98,7 @@ function Home({ navigation }) {
                     autoCorrect={false}
                     onChangeText={() => { }}
                 />
+                </View>
 
                 <TouchableOpacity style={styles.btnSubmit} onPress={() => navigation.navigate("Service")}>
                     <Text style={styles.textButtonS}>ACESSAR</Text>
@@ -137,8 +144,14 @@ const styles = StyleSheet.create({
         paddingBottom: 75,
     },
 
+    icons:{
+        width: 30,
+        height: 30,
+        marginTop: 15,
+    },
+
     input: {
-        width: '90%',
+        width: '100%',
         height: 50,
         marginBottom: 15,
         color: 'black',
@@ -152,7 +165,7 @@ const styles = StyleSheet.create({
     },
 
     btnSubmit: {
-        backgroundColor: '#000',
+        backgroundColor: '#FFFB1E',
         width: '90%',
         height: 50,
         textAlign: 'center',
@@ -163,9 +176,10 @@ const styles = StyleSheet.create({
 
     textButtonS: {
         fontSize: 22,
-        color: '#FFFF',
+        color: '#000',
         fontWeight: 'bold',
         textAlign: 'center',
+        
     },
     btnRegister: {
         marginTop: 10,
