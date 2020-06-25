@@ -1,196 +1,119 @@
-import React, { useState, useEffect } from 'react';
-import {
-    View,
-    KeyboardAvoidingView,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-    ImageBackground,
-    TextInput,
-    Animated,
-    Keyboard,
-} from 'react-native';
+import React, { useState, useEffect} from 'react';
+import { View, Image, TouchableOpacity} from 'react-native';
 
+import api from '../../services/api';
+import styles from './styles';
+import {Container, Tab, Tabs,Text} from 'native-base';
+import AsyncStorage from '@react-native-community/async-storage';
 
-function Home({ navigation }) {
-
+export default function Home({ navigation }) {
     
-    const [offset] = useState(new Animated.ValueXY({ x: 0, y: 70 }));
-    const [logo] = useState(new Animated.ValueXY({ x: 160, y: 160 }));
 
+    const [solicitation, setSolicitation] = useState([]);
+    
+        
+    const getToken = async () => {
+        const userToken = await AsyncStorage.getItem('token');
+        
+    
+          api.get(`/solicitations`, {
+            headers: {
+              'Authorization': `Bearer`  + userToken
+            }
+          })
+            .then(response => {
+              setSolicitation(response.data)
+              console.log(solicitation)
+            })
+
+    }
     useEffect(() => {
-        keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
-        keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
-
-        Animated.spring(offset.y, {
-            toValue: 0,
-            speed: 3,
-            bounciness: 15,
-            useNativeDriver: true,
-        }).start();
-    }, []);
-
-    function keyboardDidShow() {
-        Animated.parallel([
-            Animated.timing(logo.x, {
-                toValue: 80,
-                duration: 100,
-                useNativeDriver: false,
-            }), Animated.timing(logo.y, {
-                toValue: 80,
-                duration: 100,
-                useNativeDriver: false,
-            })
-        ]).start();
-    }
-
-    function keyboardDidHide() {
-        Animated.parallel([
-            Animated.timing(logo.x, {
-                toValue: 160,
-                duration: 100,
-                useNativeDriver: false,
-            }), Animated.timing(logo.y, {
-                toValue: 160,
-                duration: 100,
-                useNativeDriver: false,
-            })
-        ]).start();
-    }
-
+        getToken();
+   });
+   
+   
+    
     return (
-        <KeyboardAvoidingView style={styles.background}>
-          <ImageBackground source={require('/fatec/FacilitaPRO/app/img/back3.jpg')} style={styles.backImage} opacity={0.5}>
-            <View style={styles.containerLogo}>
-                <Animated.Image
-                    style={{
-                        width: logo.x,
-                        height: logo.y,
+        
+        
+        <Container style={styles.contAll} >
+            <View style={styles.viewOne}>
+                <View style={styles.viewImg}>
+                    <Image source={require('../../assets/avatarCli.png')} style={styles.img}/>
+                    <View style={styles.viewBtn}>
                         
-                    }}
-                    source={require('/fatec/FacilitaPRO/app/img/icon.png')}/>
+                            <Text style={styles.txtName}>Nome: Fulano Silva</Text>
+                        
+                        <TouchableOpacity style={styles.btnPerfil}>
+                            <Text style={styles.txtBtP}>Ver Perfil</Text>
+                        </TouchableOpacity></View>
+                    
+                     </View>
+                
             </View>
-            <Animated.View style={[
-                styles.container,
-                {
-                    transform: [
-                        { translateY: offset.y }
-                    ]
-                }
-            ]}>
-                <View marginRight={40} marginLeft={15} flexDirection="row">
-                <Image source={require('/fatec/FacilitaPRO/app/img/user.png')} style={styles.icons} />
-                <TextInput style={styles.input}
-                    placeholder="E-MAIL"
-                    maxLength={32}
-                    autoCorrect={false}
-                    onChangeText={() => { }}
-                />
-                </View>
+            <Tabs initialPage={0}>
+                <Tab heading="Solicitações" >
+                    <View style={styles.card}>
+                        <View justifyContent={'space-between'} flexDirection={'row'}>
+                            <Text style={styles.header} ></Text>
+                            
+                        <TouchableOpacity style={styles.btnDelete}>
+                            <Image source={require('../../assets/delete.png')} style={styles.icons} />
+                        </TouchableOpacity>              
+                    </View>
+ 
+                    <View justifyContent={'space-between'} flexDirection={'row'}>
+                        <Image source={require('../../assets/exPintura.jpg')} style={styles.imgServico} />
+                        <TouchableOpacity style={styles.btnDelete} onPress={() => navigation.navigate("Detalhe")}>
+                             <Image source={require('../../assets/detalhes.png')}style={styles.icons}/>
+                        </TouchableOpacity> 
+                        </View>               
+                    </View>
+                </Tab>
+        
+                <Tab heading="Orçamentos">
+            
+         
+        
+                </Tab>
+            </Tabs>
+        </Container>
 
-                <View  marginRight={40} marginLeft={15} flexDirection="row">
-                <Image source={require('/fatec/FacilitaPRO/app/img/email.png')} style={styles.icons} />
-                <TextInput style={styles.input}
-                    placeholder="SENHA"
-                    secureTextEntry={true}
-                    maxLength={10}
-                    autoCorrect={false}
-                    onChangeText={() => { }}
-                />
-                </View>
 
-                <TouchableOpacity style={styles.btnSubmit} onPress={() => navigation.navigate("Service")}>
-                    <Text style={styles.textButtonS}>ACESSAR</Text>
+
+
+
+
+        /*<View style={styles.container}>  
+            <Image source={require('../../assets/logo.png')} style={styles.logo}/>
+            <Text style={styles.subTitleCard}>Te ajudamos a ganhar dinheiro por conta própria!</Text>
+    
+            <View style={styles.card}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Solicita")}>
+                    <Text style={styles.textButton} >Minhas Solicitações</Text>
                 </TouchableOpacity>
-               
-                <TouchableOpacity style={styles.btnRegister} onPress={() => navigation.navigate("Register")}>
-                    <Text style={styles.textButtonR}>TRABALHE COM A GENTE</Text>
+            </View>
+
+            <View style={styles.card}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Orcamentos")}>
+                    <Text style={styles.textButton} >Meus Orçamentos</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.card} flexDirection={'row'}>
+                <TouchableOpacity style={styles.btnInformation} onPress={() => navigation.navigate("Sobre")}>
+                    <Image source={require('../../assets/sobre.png')} style={styles.iconSobre} />
+                    <Text style={styles.textInformation} >Sobre Nós</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity style={styles.btnInformation} onPress={() => navigation.navigate("Parceiros")}>
+                    <Image source={require('../../assets/parceiros.png')} style={styles.iconParceiros} />
+                    <Text style={styles.textInformation} >Parceiros</Text>
+                </TouchableOpacity>
+            </View>
 
-            </Animated.View>
-</ImageBackground>
-        </KeyboardAvoidingView>
+        </View>*/
+
+
     )
 }
-
-const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#FFF',
-    },
-    containerLogo: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingBottom: 55,
-    },
-
-    backImage: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-    },
-
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '90%',
-        paddingBottom: 75,
-    },
-
-    icons:{
-        width: 30,
-        height: 30,
-        marginTop: 15,
-    },
-
-    input: {
-        width: '100%',
-        height: 50,
-        marginBottom: 15,
-        color: 'black',
-        fontSize: 17,
-        borderRadius: 7,
-        padding: 10,
-        fontSize: 18,
-        textAlign: 'center',
-        borderBottomColor: 'black',
-        borderBottomWidth: 2,
-    },
-
-    btnSubmit: {
-        backgroundColor: '#FFFB1E',
-        width: '90%',
-        height: 50,
-        textAlign: 'center',
-        justifyContent: 'center',
-        borderRadius: 7,
-
-    },
-
-    textButtonS: {
-        fontSize: 22,
-        color: '#000',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        
-    },
-    btnRegister: {
-        marginTop: 10,
-    },
-
-    textButtonR: {
-        fontSize: 18,
-        color: '#000',
-        fontWeight: 'bold',
-    },
-
-});
-
-export default Home;
