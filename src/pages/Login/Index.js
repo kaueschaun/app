@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import api from '../../services/api';
-import AsyncStorage from '@react-native-community/async-storage';
+//import AsyncStorage from '@react-native-community/async-storage';
 import { LongPressGestureHandler } from 'react-native-gesture-handler';
 
 
@@ -26,52 +26,83 @@ export default function Login({ navigation }) {
     const [offset] = useState(new Animated.ValueXY({ x: 0, y: 70 }));
     const [logo] = useState(new Animated.ValueXY({ x: 160, y: 160 }));
     //const history = useHistory();
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-    
-    function validade () {
-        if(!email && !password) {
-           Alert.alert('Falha no login', 'E-mail ou senha incorreto')
-            return false
-        }
-        if(!email) {
-            Alert.alert('Falha no login', 'Preencha o E-mail')
-            return false
-        }
-        if(!password) {
-            Alert.alert('Falha no login', 'Preencha sua senha')
-            return false
-        }
-        return true
-    }
+    const [username, setUsername] = useState('SaraCarvalho_Silva@live.com');
+    const [password, setPassword] = useState('sara-carvalho123');
 
-    async function doLogin() {
 
-        if(validade() !== false) {
+    const doLogin = async () => {
+        
+        try {
 
-            const payload = {
+            const { data } = await api.get('/login', {
+                
                 auth: {
-                 username: 'SiasFranco69@live.com',
-                 password: 'silas-franco123'
+                    username,
+                    password,
                 }
+             })
+             console.log(data.token)
+             navigation.navigate("Home")
+            // await AsyncStorage.setItem("userId", data.id.toString());
+            //await AsyncStorage.setItem("token", data.token);
+
+          
             
-            } 
-            try {
-                const response = await api.get('/login', payload);
-                //await AsyncStorage.setItem('token',response.data.token.toString());
-                //await AsyncStorage.setItem('cliNome', response.data.cliNome.toString());
-                //await AsyncStorage.setItem('client_id', response.data.client_id.toString());
-                navigation.navigate('Home') 
-               
-                
-                
-                
-            } catch (error) {
-            Alert.alert('Falha no Login','Login não realizado')
+        } catch (error) {
+            alert("caiu aqui")
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    // function validade () {
+    //     if(!email && !password) {
+    //        Alert.alert('Falha no login', 'E-mail ou senha incorreto')
+    //         return false
+    //     }
+    //     if(!email) {
+    //         Alert.alert('Falha no login', 'Preencha o E-mail')
+    //         return false
+    //     }
+    //     if(!password) {
+    //         Alert.alert('Falha no login', 'Preencha sua senha')
+    //         return false
+    //     }
+    //     return true
+    // }
+
+    // async function doLogin() {
+
+    //     if(validade() !== false) {
+
+    //         const payload = {
+    //             auth: {
+    //              username: 'SilasFranco69@live.com',
+    //              password: 'silas-franco123'
+    //             }
+            
+    //         } 
+            
+    //        await api.get('/login', payload).then(res => {
+    //             console.log('res'. res)
+    //         }).catch(err => con)
         
         
-    }
+    // }
 }
 
     useEffect(() => {

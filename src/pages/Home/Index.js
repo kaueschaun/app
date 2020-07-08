@@ -1,80 +1,104 @@
-import React, { useState, useEffect} from 'react';
-import { View, Image, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 
 import api from '../../services/api';
 import styles from './styles';
-import {Container, Tab, Tabs,Text} from 'native-base';
-import AsyncStorage from '@react-native-community/async-storage';
+import { Container, Tab, Tabs, Text, Button } from 'native-base';
+//import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Home({ navigation }) {
-    
 
-    const [solicitation, setSolicitation] = useState([]);
-    
-        
+
+    const [solicitation, setSolicitation] = useState(null);
+
+
     const getToken = async () => {
-        const userToken = await AsyncStorage.getItem('token');
-        
-    
-          api.get(`/solicitations`, {
+        //const userToken = await AsyncStorage.getItem('token');
+
+
+        api.get(`/solicitations`, {
             headers: {
-              'Authorization': `Bearer`  + userToken
+                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiI1NzM1OCIsImlhdCI6MTU5NDE4OTAyMiwiZXhwIjoxNTk0Mjc1NDIyfQ.Zoh8meH6eWc7LKfwQ4znbIIeRINmwD8JxwXB6jjMkqY`
             }
-          })
+        })
             .then(response => {
-              setSolicitation(response.data)
-              console.log(solicitation)
+                setSolicitation(response.data)
+                console.log(solicitation)
             })
 
     }
     useEffect(() => {
-        getToken();
-   });
-   
-   
-    
+        if (!solicitation) {
+            getToken();
+        }
+
+    });
+
+
+
     return (
-        
-        
+
+
         <Container style={styles.contAll} >
             <View style={styles.viewOne}>
                 <View style={styles.viewImg}>
-                    <Image source={require('../../assets/avatarCli.png')} style={styles.img}/>
+                    <Image source={require('../../assets/avatarCli.png')} style={styles.img} />
                     <View style={styles.viewBtn}>
-                        
-                            <Text style={styles.txtName}>Nome: Fulano Silva</Text>
-                        
+
+                        <Text style={styles.txtName}>Nome: Fulano Silva</Text>
+
                         <TouchableOpacity style={styles.btnPerfil}>
                             <Text style={styles.txtBtP}>Ver Perfil</Text>
                         </TouchableOpacity></View>
-                    
-                     </View>
-                
+
+                </View>
+
             </View>
             <Tabs initialPage={0}>
                 <Tab heading="Solicitações" >
-                    <View style={styles.card}>
+                    {/* <View style={styles.card}>
                         <View justifyContent={'space-between'} flexDirection={'row'}>
                             <Text style={styles.header} ></Text>
-                            
                         <TouchableOpacity style={styles.btnDelete}>
                             <Image source={require('../../assets/delete.png')} style={styles.icons} />
                         </TouchableOpacity>              
+                    </View> */}
+                    <View style={[styles.container, { backgroundColor: '#345D7E', width: 412 }]}>
+                <Text style={{color: "black"}}>Cidade {solicitation && solicitation[0].city}</Text> 
+                        
+                        
+                        <SafeAreaView style={{ height: 200 }}>
+                            <FlatList
+                                data={solicitation}
+                                keyExtractor={item => item.id}
+                                numColumns={1}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <View style={{ maxWidth: 400 }}>
+                                            <Button style={{ margin: 3, flexDirection: 'column', height: 30, width: 250, borderRadius: 10 } } onPress={() => navigation.navigate("Solicita")}>
+                                                <Text style={{ fontSize: 12, height: 30 }}>{item.address.city}</Text>
+                                            </Button>
+                                          
+                                        </View>
+                                    );
+                                }}
+                            />
+                        </SafeAreaView>
+
                     </View>
- 
-                    <View justifyContent={'space-between'} flexDirection={'row'}>
+                    {/* <View justifyContent={'space-between'} flexDirection={'row'}>
                         <Image source={require('../../assets/exPintura.jpg')} style={styles.imgServico} />
                         <TouchableOpacity style={styles.btnDelete} onPress={() => navigation.navigate("Detalhe")}>
                              <Image source={require('../../assets/detalhes.png')}style={styles.icons}/>
                         </TouchableOpacity> 
                         </View>               
-                    </View>
+                    </View> */}
                 </Tab>
-        
+
                 <Tab heading="Orçamentos">
-            
-         
-        
+
+
+
                 </Tab>
             </Tabs>
         </Container>
