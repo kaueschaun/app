@@ -10,7 +10,14 @@ export default function Home({ navigation }) {
 
 
     const [solicitation, setSolicitation] = useState(null);
+    const [budgets, setBudgets] = useState(null);
 
+    const apertandoABraba = (el) => {
+        window.professional_id = el.address.professional_id;
+        window.solicitation_id = el.id;
+        console.log(el)
+        navigation.navigate("Solicita")
+    }
 
     const getToken = async () => {
         //const userToken = await AsyncStorage.getItem('token');
@@ -18,12 +25,12 @@ export default function Home({ navigation }) {
 
         api.get(`/solicitations`, {
             headers: {
-                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiI1NzM1OCIsImlhdCI6MTU5NDE4OTAyMiwiZXhwIjoxNTk0Mjc1NDIyfQ.Zoh8meH6eWc7LKfwQ4znbIIeRINmwD8JxwXB6jjMkqY`
+                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiI1NzM1OCIsImlhdCI6MTU5NDI2ODk0MSwiZXhwIjoxNTk0MzU1MzQxfQ.uq6YwzY2L-ltZc1uxnUPfxPvGazLz95FwC-9-OabKcU`
             }
         })
             .then(response => {
-                setSolicitation(response.data)
-                console.log(solicitation)
+                setSolicitation(response.data.reverse())
+
             })
 
     }
@@ -34,6 +41,15 @@ export default function Home({ navigation }) {
 
     });
 
+    api.get(`/budgets`, {
+        headers: {
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiI1NzM1OCIsImlhdCI6MTU5NDI2ODk0MSwiZXhwIjoxNTk0MzU1MzQxfQ.uq6YwzY2L-ltZc1uxnUPfxPvGazLz95FwC-9-OabKcU`
+        }
+    })
+        .then(response => {
+            setBudgets(response.data)
+
+        })
 
 
     return (
@@ -56,88 +72,48 @@ export default function Home({ navigation }) {
             </View>
             <Tabs initialPage={0}>
                 <Tab heading="Solicitações" >
-                    {/* <View style={styles.card}>
-                        <View justifyContent={'space-between'} flexDirection={'row'}>
-                            <Text style={styles.header} ></Text>
-                        <TouchableOpacity style={styles.btnDelete}>
-                            <Image source={require('../../assets/delete.png')} style={styles.icons} />
-                        </TouchableOpacity>              
-                    </View> */}
-                    <View style={[styles.container, { backgroundColor: '#345D7E', width: 412 }]}>
-                <Text style={{color: "black"}}>Cidade {solicitation && solicitation[0].city}</Text> 
-                        
-                        
-                        <SafeAreaView style={{ height: 200 }}>
-                            <FlatList
-                                data={solicitation}
-                                keyExtractor={item => item.id}
-                                numColumns={1}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <View style={{ maxWidth: 400 }}>
-                                            <Button style={{ margin: 3, flexDirection: 'column', height: 30, width: 250, borderRadius: 10 } } onPress={() => navigation.navigate("Solicita")}>
-                                                <Text style={{ fontSize: 12, height: 30 }}>{item.address.city}</Text>
-                                            </Button>
-                                          
-                                        </View>
-                                    );
-                                }}
-                            />
-                        </SafeAreaView>
+                    <FlatList style={styles.flat}
+                        data={solicitation}
+                        keyExtractor={solicitation => String(solicitation.id)}
+                        showsVerticalScrollIndicator={false}
 
-                    </View>
-                    {/* <View justifyContent={'space-between'} flexDirection={'row'}>
-                        <Image source={require('../../assets/exPintura.jpg')} style={styles.imgServico} />
-                        <TouchableOpacity style={styles.btnDelete} onPress={() => navigation.navigate("Detalhe")}>
-                             <Image source={require('../../assets/detalhes.png')}style={styles.icons}/>
-                        </TouchableOpacity> 
-                        </View>               
-                    </View> */}
+                        onEndReachedThreshold={0.2}
+
+                        renderItem={({ item: solicitation }) => (
+                            <View style={styles.divSoli}>
+                                <View>
+                                    <Text style={styles.id}>Descrição de Serviço</Text>
+                                    <Text style={styles.incidentValue}>{solicitation.description}</Text>
+                                    <Text style={styles.id}>Status</Text>
+                                    <Text style={styles.txtStatus}>{solicitation.id}</Text>
+                                    <Text style={styles.id}>Endereço</Text>
+                                    <Text style={styles.txtStreet}>Rua: {solicitation.address.street}</Text>
+                                    <Text style={styles.foto}>Foto do Serviço</Text>
+                                    <View style={styles.divImg}>
+                                        <Image style={styles.img2} source={{ uri: `${solicitation.photoUrl}` }} />
+
+                                    </View>
+                                </View>
+                                <Button
+                                    style={styles.Button}
+                                    onPress={() => apertandoABraba(solicitation)}
+                                >
+                                    <Text style={styles.txtOrca}>Enviar Orçamento</Text>
+                                </Button>
+                            </View>
+
+
+                        )}
+                    />
+
                 </Tab>
 
                 <Tab heading="Orçamentos">
-
-
 
                 </Tab>
             </Tabs>
         </Container>
 
-
-
-
-
-
-        /*<View style={styles.container}>  
-            <Image source={require('../../assets/logo.png')} style={styles.logo}/>
-            <Text style={styles.subTitleCard}>Te ajudamos a ganhar dinheiro por conta própria!</Text>
-    
-            <View style={styles.card}>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Solicita")}>
-                    <Text style={styles.textButton} >Minhas Solicitações</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.card}>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Orcamentos")}>
-                    <Text style={styles.textButton} >Meus Orçamentos</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.card} flexDirection={'row'}>
-                <TouchableOpacity style={styles.btnInformation} onPress={() => navigation.navigate("Sobre")}>
-                    <Image source={require('../../assets/sobre.png')} style={styles.iconSobre} />
-                    <Text style={styles.textInformation} >Sobre Nós</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.btnInformation} onPress={() => navigation.navigate("Parceiros")}>
-                    <Image source={require('../../assets/parceiros.png')} style={styles.iconParceiros} />
-                    <Text style={styles.textInformation} >Parceiros</Text>
-                </TouchableOpacity>
-            </View>
-
-        </View>*/
-
-
     )
+
 }

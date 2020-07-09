@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Left } from 'native-base';
 
 export default StyleSheet.create({
 
@@ -27,7 +28,7 @@ export default StyleSheet.create({
     contAll: {
         backgroundColor: 'white',
         justifyContent: 'center'
-        
+
     },
     btnPerfil: {
         marginTop: 8,
@@ -37,7 +38,7 @@ export default StyleSheet.create({
         width: 80,
         height: 30,
         backgroundColor: 'black',
-        
+
     },
     txtBtP: {
         fontSize: 16,
@@ -58,7 +59,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
 
-  
+
 
     titleCard: {
         fontSize: 32,
@@ -77,14 +78,14 @@ export default StyleSheet.create({
         padding: 10,
     },
 
-    iconSobre:{
+    iconSobre: {
         width: 40,
         height: 40,
         marginTop: 15,
         marginLeft: 60
     },
-  
-    iconParceiros:{
+
+    iconParceiros: {
         width: 40,
         height: 40,
         marginTop: 15,
@@ -105,7 +106,7 @@ export default StyleSheet.create({
         elevation: 10,
     },
 
-    btnInformation:{
+    btnInformation: {
         width: 170,
         height: 60,
         marginTop: 10,
@@ -130,9 +131,9 @@ export default StyleSheet.create({
         color: 'black',
     },
 
-    logo:{
-        margin:10,
-         width: 380,
+    logo: {
+        margin: 10,
+        width: 380,
         height: 80
     },
     header: {
@@ -219,13 +220,13 @@ export default StyleSheet.create({
 
     },
 
-    icons:{
+    icons: {
         width: 30,
         height: 30,
         marginTop: 10,
     },
 
-    imgServico:{
+    imgServico: {
         width: 300,
         height: 180,
         alignItems: 'center',
@@ -233,14 +234,100 @@ export default StyleSheet.create({
         borderRadius: 5,
     },
 
-    coluna:{
-        marginRight: 10, 
-        flexDirection: 'column',
+    container: {
         alignItems: 'center',
-        justifyContent: 'space-between',
-       
+        width: '100%',
+        height: 400,
+        flexDirection: 'row',
     },
+    divSoli: {  
+        width: '95%',
+        height: 'auto',
+        backgroundColor: '#FFF',
+        padding: 15,
+        display: 'flex',
+        borderRadius: 10,
+        margin: 10,
+        marginBottom: 10,
+        elevation: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    txtId: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginLeft:2,
 
-   
+    },
+    id: {
+        textAlign: 'center',
+        backgroundColor: 'gray',
+        borderRadius: 10,
+        fontSize: 16,
+        marginBottom: 2,
+        width: 170,
+        color: 'white'
+    },
+    desc: {
+        textAlign: 'center',
+        marginTop: 5,
+        backgroundColor: 'gray',
+        borderRadius: 10,
+        fontSize: 16,
+        width: 120,
+        color: 'white'
+    },
+    txtStatus: {
+        textTransform: 'capitalize',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    img2:{
+        width: 200,
+        height: 100,
+    },
+    divImg: {
+        width: '70%',
+        flexDirection: 'row',
+        display: 'flex',
+    },
+    flat: {
+        width: '100%',
+        
+    },
+    detailButton: {
+        width: 150
+    },
+    txtStreet: {
+        textTransform: 'capitalize',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    foto: {
+        textAlign: 'center',
+        marginTop: 5,
+        backgroundColor: 'gray',
+        borderRadius: 10,
+        fontSize: 16,
+        width: 120,
+        color: 'white',
+        marginBottom: 10,
+    },
+    Button: {
+        marginTop: 100,
+        color: 'white',
+        borderRadius: 10,
+        backgroundColor: '#54a176',
+        width: 120,
+        height: 60,
+        textAlign: 'center',
+
+    },
+    txtOrca: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 11,
+    }
     
 });

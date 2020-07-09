@@ -25,85 +25,53 @@ export default function Login({ navigation }) {
 
     const [offset] = useState(new Animated.ValueXY({ x: 0, y: 70 }));
     const [logo] = useState(new Animated.ValueXY({ x: 160, y: 160 }));
-    //const history = useHistory();
-    const [username, setUsername] = useState('SaraCarvalho_Silva@live.com');
-    const [password, setPassword] = useState('sara-carvalho123');
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    // 'sara-carvalho123'
+    // 'SaraCarvalho_Silva@live.com'
 
+    function validade() {
+        if (!username && !password) {
+            Alert.alert('Falha no login', 'E-mail ou senha incorreto')
+            return false
+        }
+        if (!username) {
+            Alert.alert('Falha no login', 'Preencha o E-mail')
+            return false
+        }
+        if (!password) {
+            Alert.alert('Falha no login', 'Preencha sua senha')
+            return false
+        }
+        return true
+    }
 
     const doLogin = async () => {
-        
-        try {
+        if (validade() !== false) {
+            try {
 
-            const { data } = await api.get('/login', {
-                
-                auth: {
-                    username,
-                    password,
-                }
-             })
-             console.log(data.token)
-             navigation.navigate("Home")
-            // await AsyncStorage.setItem("userId", data.id.toString());
-            //await AsyncStorage.setItem("token", data.token);
 
-          
-            
-        } catch (error) {
-            alert("caiu aqui")
+                const { data } = await api.get('/login', {
+
+                    auth: {
+                        username,
+                        password,
+                    }
+                })
+
+                console.log(data.token)
+                navigation.navigate("Home")
+                // await AsyncStorage.setItem("userId", data.id.toString());
+                //await AsyncStorage.setItem("token", data.token);
+
+
+
+            } catch (error) {
+                alert("Login Incorreto")
+            }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    // function validade () {
-    //     if(!email && !password) {
-    //        Alert.alert('Falha no login', 'E-mail ou senha incorreto')
-    //         return false
-    //     }
-    //     if(!email) {
-    //         Alert.alert('Falha no login', 'Preencha o E-mail')
-    //         return false
-    //     }
-    //     if(!password) {
-    //         Alert.alert('Falha no login', 'Preencha sua senha')
-    //         return false
-    //     }
-    //     return true
-    // }
-
-    // async function doLogin() {
-
-    //     if(validade() !== false) {
-
-    //         const payload = {
-    //             auth: {
-    //              username: 'SilasFranco69@live.com',
-    //              password: 'silas-franco123'
-    //             }
-            
-    //         } 
-            
-    //        await api.get('/login', payload).then(res => {
-    //             console.log('res'. res)
-    //         }).catch(err => con)
-        
-        
-    // }
-}
+    }
 
     useEffect(() => {
         keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
@@ -171,31 +139,25 @@ export default function Login({ navigation }) {
                         <TextInput style={styles.input}
                             placeholder="E-MAIL"
                             autoCorrect={false}
-                            onChangeText={(e) => { setEmail(e) }}
+                            onChangeText={(e) => { setUsername(e) }}
                         />
                     </View>
 
                     <View marginRight={40} marginLeft={15} flexDirection="row">
-                        <Image source={require('../../assets/email.png')} style={styles.icons} />
+                        <Image source={require('../../assets/senha.png')} style={styles.icons} />
                         <TextInput style={styles.input}
                             placeholder="SENHA"
+                            secureTextEntry={true}
                             autoCorrect={false}
                             onChangeText={(e) => { setPassword(e) }}
                         />
                     </View>
-
-
-             
-
                     <TouchableOpacity style={styles.btnSubmit} onPress={() => doLogin()}>
                         <Text style={styles.textButtonS} >ACESSAR</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.btnRegister} onPress={() => navigation.navigate("Register")}>
                         <Text style={styles.textButtonR}>TRABALHE COM A GENTE</Text>
                     </TouchableOpacity>
-
-
                 </Animated.View>
             </ImageBackground>
         </KeyboardAvoidingView>

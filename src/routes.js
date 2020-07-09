@@ -11,7 +11,6 @@ import Parceiros from './pages/Parceiros/Index';
 import Detalhe from './pages/Detalhe/Index';
 import Solicita from './pages/Solicita/Index';
 import Perfil from './pages/Perfil/index';
-
 const Stack = createStackNavigator();
 
 function Routes() {
@@ -117,6 +116,7 @@ function Routes() {
             headerTintColor: 'white'
           }}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
